@@ -1,4 +1,4 @@
-# Voice_Assistant_Aisha
+# Voice_Assistant_AIsha
 This repository contains the python code for a voice activated assistant. She hears your command, does the action and speaks like a person.
 
 Currently following operations are supported by 'AIsha':
