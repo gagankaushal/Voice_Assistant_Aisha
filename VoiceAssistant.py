@@ -4,10 +4,10 @@ import speech_recognition as sr
 import os
 # import sys
 import re
-import dbus
-import dbus.glib
-import dbus.service
-import gobject
+# import dbus
+# import dbus.glib
+# import dbus.service
+# import gobject
 
 
 from datetime import datetime, timedelta
@@ -80,9 +80,29 @@ def assistant(command):
                                     flag = 1
                                     final_url = 'https://www.youtube.com' + vid['href']
                                     url_list.append(final_url)
-                                    webbrowser.open(final_url)
+                                    # webbrowser.open(final_url)
+                                    # driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
+                                    driver.get(final_url)
+                                    driver.execute_script(
+                                    'document.getElementsByTagName("video")[0].paused ?'
+                                    'document.getElementsByTagName("video")[0].play() :'
+                                    'document.getElementsByTagName("video")[0].pause();')
+                                    elem = driver.find_element_by_class_name('ytp-play-button')
+                                    # WebDriverWait(driver, 30).until(elem)
+                                    elem.click()
                                     sofiaResponse('Enjoy the song, Gagan!')
                                     break
+
+    elif 'pause' in command:
+        # driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
+        elem = driver.find_element_by_class_name('ytp-play-button')
+        elem.click()
+        sofiaResponse('Video has been paused!')
+
+    elif 'resume' in command:
+        elem = driver.find_element_by_class_name('ytp-play-button')
+        elem.click()
+        sofiaResponse('Video has been resumed!')
 
 
     # url = url_list[0]
@@ -203,6 +223,7 @@ def sofiaResponse(output):
 
 sofiaResponse('Hi Gagan, this is Aisha and I am your personal voice assistant. How can I help you today?')# Please give a command or say "help me" and I will tell you what all I can do for you.'how can I help you today?')
 
+driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
 
 while True:
     assistant(myCommand())
